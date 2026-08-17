@@ -110,7 +110,7 @@ http://127.0.0.1:8000/docs
 ```json
 {
   "title": "Groceries",
-  "amount": 125.50,
+  "amount": 125.5,
   "category": "Food",
   "description": "Weekend shopping"
 }
