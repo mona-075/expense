@@ -1,9 +1,35 @@
 from datetime import datetime
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, EmailStr, Field
 
 
+# --- User Schemas ---
+class UserBase(BaseModel):
+    email: EmailStr
+
+
+class UserCreate(UserBase):
+    password: str = Field(..., min_length=6, max_length=128, description="User password (min 6 characters)")
+
+
+class UserResponse(UserBase):
+    id: int
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+# --- Token Schemas ---
+class Token(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+
+
+class TokenData(BaseModel):
+    email: Optional[str] = None
+
+
+# --- Expense Schemas ---
 class ExpenseBase(BaseModel):
     title: str = Field(..., min_length=1, max_length=100)
     amount: float = Field(..., gt=0)
@@ -22,6 +48,7 @@ class ExpenseUpdate(ExpenseBase):
 class ExpenseResponse(ExpenseBase):
     id: int
     date: datetime
+    user_id: int
 
     model_config = ConfigDict(from_attributes=True)
 
