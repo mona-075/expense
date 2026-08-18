@@ -51,7 +51,7 @@ def get_auth_headers(email: str = "expense_user@example.com", password: str = "t
     # Login
     response = client.post(
         "/auth/login",
-        data={"username": email, "password": password},
+        json={"email": email, "password": password},
     )
     token = response.json()["access_token"]
     return {"Authorization": f"Bearer {token}"}

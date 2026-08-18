@@ -13,6 +13,10 @@ class UserCreate(UserBase):
     password: str = Field(..., min_length=6, max_length=128, description="User password (min 6 characters)")
 
 
+class UserLogin(UserBase):
+    password: str = Field(..., description="User password")
+
+
 class UserResponse(UserBase):
     id: int
 

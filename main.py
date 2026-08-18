@@ -1,5 +1,4 @@
 from fastapi import Depends, FastAPI, HTTPException, status
-from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
 from auth import (
@@ -29,6 +28,7 @@ from schemas import (
     Token,
     TotalExpenseResponse,
     UserCreate,
+    UserLogin,
     UserResponse,
 )
 
@@ -72,11 +72,11 @@ def signup(user_data: UserCreate, db: Session = Depends(get_db)):
     tags=["Authentication"],
 )
 def login(
-    form_data: OAuth2PasswordRequestForm = Depends(),
+    user_data: UserLogin,
     db: Session = Depends(get_db),
 ):
-    user = get_user_by_email(db, email=form_data.username)
-    if not user or not verify_password(form_data.password, user.hashed_password):
+    user = get_user_by_email(db, email=user_data.email)
+    if not user or not verify_password(user_data.password, user.hashed_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect email or password",

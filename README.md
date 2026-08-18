@@ -89,8 +89,8 @@ http://127.0.0.1:8000/docs
 ## API Endpoints
 
 ### Authentication
-- `POST /auth/signup` - Register a new user (`email` and `password`).
-- `POST /auth/login` - Authenticate with OAuth2 password form and obtain a Bearer JWT access token.
+- `POST /auth/signup` - Register a new user (`{"email": "...", "password": "..."}`).
+- `POST /auth/login` - Authenticate with JSON credentials (`{"email": "...", "password": "..."}`) and obtain a Bearer JWT access token.
 
 ### Protected Expenses (Requires Bearer Token)
 - `POST /expenses` - Create an expense (automatically linked to current user).
@@ -107,10 +107,10 @@ http://127.0.0.1:8000/docs
 ## Using Swagger UI (/docs)
 
 1. Open `http://127.0.0.1:8000/docs`.
-2. Register a user under `POST /auth/signup`.
-3. Click the green **Authorize** button at the top right.
-4. Enter your registered email into **username** and your password into **password** (or paste your Bearer token).
-5. Click **Authorize** then **Close**. All protected endpoints will now include the Bearer token automatically!
+2. Register a user under `POST /auth/signup` or login under `POST /auth/login` to obtain your `access_token`.
+3. Click the green **Authorize** button (🔒) at the top right.
+4. Paste your `access_token` into the **Value** field.
+5. Click **Authorize** then **Close**. All protected endpoints will now send the Bearer token automatically!
 
 ## Run Tests
 

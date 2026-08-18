@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 
 from alembic import context
 from database import Base
+import models
 
 # Load environment variables
 load_dotenv()

@@ -78,7 +78,7 @@ def test_user_login_success():
     )
     response = client.post(
         "/auth/login",
-        data={"username": "bob@example.com", "password": "mypassword123"},
+        json={"email": "bob@example.com", "password": "mypassword123"},
     )
     assert response.status_code == 200
     data = response.json()
@@ -93,7 +93,7 @@ def test_user_login_incorrect_password():
     )
     response = client.post(
         "/auth/login",
-        data={"username": "bob@example.com", "password": "wrongpassword"},
+        json={"email": "bob@example.com", "password": "wrongpassword"},
     )
     assert response.status_code == 401
     assert response.json()["detail"] == "Incorrect email or password"
@@ -102,7 +102,7 @@ def test_user_login_incorrect_password():
 def test_user_login_nonexistent_user():
     response = client.post(
         "/auth/login",
-        data={"username": "nobody@example.com", "password": "wrongpassword"},
+        json={"email": "nobody@example.com", "password": "wrongpassword"},
     )
     assert response.status_code == 401
     assert response.json()["detail"] == "Incorrect email or password"
@@ -145,7 +145,7 @@ def test_user_data_isolation():
     )
     alice_login = client.post(
         "/auth/login",
-        data={"username": "alice@example.com", "password": "password123"},
+        json={"email": "alice@example.com", "password": "password123"},
     )
     alice_token = alice_login.json()["access_token"]
     alice_headers = {"Authorization": f"Bearer {alice_token}"}
@@ -156,7 +156,7 @@ def test_user_data_isolation():
     )
     bob_login = client.post(
         "/auth/login",
-        data={"username": "bob@example.com", "password": "password123"},
+        json={"email": "bob@example.com", "password": "password123"},
     )
     bob_token = bob_login.json()["access_token"]
     bob_headers = {"Authorization": f"Bearer {bob_token}"}
